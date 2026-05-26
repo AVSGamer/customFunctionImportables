@@ -1,0 +1,2 @@
+example:
+powershell -ExecutionPolicy Bypass -File .\tag_release.ps1 -CommitMessage "Initial release"

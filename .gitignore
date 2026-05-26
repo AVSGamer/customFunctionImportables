@@ -1,0 +1,20 @@
+# --- Compiled Binaries & Libraries ---
+*.dll
+*.exe
+*.so
+*.dylib
+*.a
+*.lib
+
+# --- Temporary Test Artifacts ---
+*.tmp
+*.log
+num_test_out.tmp
+
+# --- IDE & System Files ---
+.vs/
+.vscode/
+*.suo
+*.user
+Thumbs.db
+.DS_Store

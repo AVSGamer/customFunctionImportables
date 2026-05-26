@@ -1,0 +1,65 @@
+name: Automated Cross-Language Binary Compilation
+
+on:
+  push:
+    tags:
+      - 'v*' # Triggers automatically when you push a version tag (e.g., v1.0.0)
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Compile Windows 64-bit DLL
+        run: |
+          gcc -shared -o americanNumberWordsToNumericals.dll americanNumberWordsToNumericals.c
+
+      - name: Upload Windows Asset
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-binary
+          path: americanNumberWordsToNumericals.dll
+
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v4
+
+      - name: Compile Linux 64-bit Shared Object
+        run: |
+          gcc -shared -fPIC -o americanNumberWordsToNumericals.so americanNumberWordsToNumericals.c
+
+      - name: Upload Linux Asset
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-binary
+          path: americanNumberWordsToNumericals.so
+
+  release:
+    needs: [build-windows, build-linux]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Download Windows Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-binary
+
+      - name: Download Linux Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-binary
+
+      - name: Generate Automated Release Production Package
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            americanNumberWordsToNumericals.dll
+            americanNumberWordsToNumericals.so
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
