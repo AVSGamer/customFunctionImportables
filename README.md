@@ -15,8 +15,8 @@ A zero-dependency, ultra-portable C engine that instantly converts American Engl
 ## 🚀 How to Download the Binaries
 Pre-compiled production binaries are automatically built by our cloud pipeline for every tag release. 
 Go to the **Releases** tab on the right sidebar of this repository to download the latest deployment assets:
-* Windows: `numberWordsToNumericals.dll`
-* Linux: `numberWordsToNumericals.so`
+* Windows: `americanNumberWordsToNumericals.dll`
+* Linux: `americanNumberWordsToNumericals.so`
 
 ---
 
@@ -37,7 +37,7 @@ const os = require('os');
 
 // 1. Automatically detect the environment and choose the correct file extension [1]
 const isWindows = os.platform() === 'win32';
-const libName = isWindows ? 'numberWordsToNumericals.dll' : 'numberWordsToNumericals.so';
+const libName = isWindows ? 'americanNumberWordsToNumericals.dll' : 'americanNumberWordsToNumericals.so';
 const libPath = path.resolve(__dirname, libName);
 
 // 2. Bind the exact native C function signatures using Javascript types [1]
@@ -75,7 +75,7 @@ import os
 import sys
 
 # 1. Detect platform extension dynamically
-lib_name = "numberWordsToNumericals.dll" if sys.platform == "win32" else "numberWordsToNumericals.so"
+lib_name = "americanNumberWordsToNumericals.dll" if sys.platform == "win32" else "americanNumberWordsToNumericals.so"
 dll_path = os.path.abspath(lib_name)
 lib = ctypes.CDLL(dll_path)
 
@@ -108,10 +108,10 @@ using System.Runtime.InteropServices;
 
 class Program {
     // Leaves off file extensions; .NET Core resolves the file suffix depending on the host OS
-    [DllImport("numberWordsToNumericals", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("americanNumberWordsToNumericals", CallingConvention = CallingConvention.Cdecl)]
     public static extern int word_to_numerical(string inputStr, out ulong result);
 
-    [DllImport("numberWordsToNumericals", CallingConvention = CallingConvention.Cdecl)]
+    [DllImport("americanNumberWordsToNumericals", CallingConvention = CallingConvention.Cdecl)]
     public static extern IntPtr get_last_error_message();
 
     static void Main() {
